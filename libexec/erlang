@@ -475,6 +475,11 @@ select_release_from_store() {
       error_message "No $_release_type(s) found in ${RELEASE_STORE_TYPE} release store."
       hint_message "You can build one with the ./edeliver build $_release_type task."
       exit 2
+    elif  [ "$FORCE" != "true" ]; then
+      local _reversed_release_files=( $("$_release_files" | sort -r) )
+      RELEASE_FILE=$(basename ${_reversed_release_files[0]})
+      VERSION=${RELEASE_FILE/${APP}_/}
+      VERSION=${VERSION/.${_release_type}.tar.gz/}
     else
       status "Selecting release"
       hint_message "Found ${#_release_files[@]} different versions to ${_action}."
