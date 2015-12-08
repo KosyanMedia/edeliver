@@ -95,7 +95,7 @@ if (( $# )); then
       if (( $# )); then
         arg="$1" && shift
         case "${arg}" in
-          (release|upgrade)
+          (release|upgrade|shared)
             COMMAND_INFO="${arg}"
           ;;
           (*)
@@ -404,4 +404,3 @@ case "${COMMAND}" in
     fi
   ;;
 esac
-
