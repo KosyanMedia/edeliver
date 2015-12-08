@@ -749,6 +749,16 @@ remote_extract_release_archive() {
     tar -xzvf ${_archive} $SILENCE && rm ${_archive} $SILENCE"
 }
 
+remote_deploy_shared() {
+  local _source=$1
+  local _destination=$2
+  __remote "
+    [ -f ~/.profile ] && source ~/.profile
+    set -e
+    mkdir -p ${DELIVER_TO}/${APP}/shared/$_destination && \
+      scp $BUILD_USER@$BUILD_HOST:$BUILD_AT/$_source/* $_"
+}
+
 # gets the sha hash of the latest commit of the branch to deploy
 get_latest_commit() {
   __exec "git rev-parse $BRANCH;"
