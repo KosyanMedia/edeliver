@@ -4,24 +4,13 @@ require_deploy_config
 set_deploy_hosts
 
 run() {
-  for p in "$@"; do
-    case $p in
-      --source=*)
-        local _source="${p##*=}"
-        ;;
-      --destination=*)
-        local _destination="${p##*=}"
-        ;;
-    esac
-  done
-
-  if [[ -z "$_source" || -z "$_destination" ]]; then
-    echo "No --source and --destination arguments for shared deployment. Skipping..."
+  if [[ -z "$SHARED_SOURCE" || -z "$SHARED_DESTINATION" ]]; then
+    echo "No --shared-source and --shared-destination arguments for shared deployment. Skipping..."
     return
   fi
 
   authorize_hosts
   authorize_remote_hosts
 
-  remote_deploy_shared "${_source}" "$_destination"
+  remote_deploy_shared "${SHARED_SOURCE}" "${SHARED_DESTINATION}"
 }
