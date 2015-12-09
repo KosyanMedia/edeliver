@@ -754,11 +754,14 @@ remote_deploy_shared() {
   local _destination=$2
   local _release_store_host=${RELEASE_STORE%:*}
 
+  status "Creating remote shared directory ${DELIVER_TO}/${APP}/shared/$_destination"
   __remote "
     [ -f ~/.profile ] && source ~/.profile
     set -e
     mkdir -p ${DELIVER_TO}/${APP}/shared/$_destination"
-  __exec "scp -o ConnectTimeout=\"$SSH_TIMEOUT\" $BUILD_USER@$BUILD_HOST:$BUILD_AT/$_source/* ${_release_store_host}:${DELIVER_TO}/${APP}/shared/$_destination $SILENCE"
+
+  status "Copying $BUILD_USER@$BUILD_HOST:$BUILD_AT/$_source/ to ${_release_store_host}:${DELIVER_TO}/${APP}/shared/$_destination"
+  __exec "scp -r -o ConnectTimeout=\"$SSH_TIMEOUT\" $BUILD_USER@$BUILD_HOST:$BUILD_AT/$_source/* ${_release_store_host}:${DELIVER_TO}/${APP}/shared/$_destination $SILENCE"
 }
 
 # gets the sha hash of the latest commit of the branch to deploy
