@@ -347,9 +347,9 @@ do
       elif [[ "${arg}" =~ ^--env= ]]; then
         TARGET_MIX_ENV=${arg##--env=}
       elif [[ "${arg}" =~ ^--shared-source= ]]; then
-        SHARED_SOURCE=${arg##--env=}
+        SHARED_SOURCE=${arg##--shared-source=}
       elif [[ "${arg}" =~ ^--shared-destination= ]]; then
-        SHARED_DESTINATION=${arg##--env=}
+        SHARED_DESTINATION=${arg##--shared-destination=}
       else
         [[ -n "${COMMAND}" ]] && __exec_if_defined "accepts_custom_command_argument" "${COMMAND}" "${arg}" || hint_message "Unknown argument ${arg} ignored"
       fi
